@@ -109,7 +109,7 @@ const API_KEY = "sk-proj-abc123...";
 api_key = "sk-proj-abc123..."
 ```
 
-#### ✅ CORRECT: Environment Variables
+#### ↪️ CORRECT: Environment Variables
 
 #### PHP with `vlucas/phpdotenv`
 
@@ -181,7 +181,7 @@ const openaiKey = process.env.OPENAI_API_KEY;
 const claudeKey = process.env.ANTHROPIC_API_KEY;
 ```
 
-### 🔒 Additional Key Security
+### 🔒 Additional Key Security for your repos
 
 ```gitignore
 # .gitignore
@@ -1195,6 +1195,12 @@ module.exports = UniversalAIClient;
 - [Gitleaks](https://github.com/gitleaks/gitleaks) - Scan for secrets in git repos
 - [TruffleHog](https://github.com/trufflesecurity/trufflehog) - Find leaked credentials
 - [Dependabot](https://github.com/dependabot) - Automated dependency updates
+
+### Good to know
+
+- [Security Headers — Complete Implementation Guide](https://github.com/VolkanSah/Security-Headers)
+- [Securing FastAPI Applications](https://github.com/VolkanSah/Securing-FastAPI-Applications)
+- [ModSecurity Webserver Protection Guide](https://github.com/VolkanSah/ModSecurity-Webserver-Protection-Guide)
 
 ---
 
