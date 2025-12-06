@@ -1213,6 +1213,7 @@ Found this useful?
 - 💡 **Suggest Improvements** through Pull Requests
 - 🔀 **Contribute** - PRs are welcome!
 - 📢 **Share** with your developer community
+- **If you are rich** buy me a ☕
 
 ### Contributors
 
