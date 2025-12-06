@@ -7,7 +7,7 @@
 [![Node.js](https://img.shields.io/badge/Node.js-18.x-339933?logo=node.js)](https://nodejs.org)
 [![Security](https://img.shields.io/badge/Security-Critical-red)]()
 
-> **2025 Update**: Expanded for all major AI providers with a focus on WordPress & TYPO3 integrations
+> **2025/26 Update**: Expanded for all major AI providers with a focus on WordPress & TYPO3 integrations
 
 ---
 
