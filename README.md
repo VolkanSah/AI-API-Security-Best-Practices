@@ -1,283 +1,610 @@
-# GPT Security Best Practices
+# 🛡️ AI API Security Best Practices
 
-[Source of this GPT Security Best Practices](https://github.com/VolkanSah/GPT-Security-Best-Practices/) look for updates before you use these tips if it is forked!
+**Universal Security Guide for OpenAI, Anthropic Claude, Google Gemini & Other LLM APIs**
 
-As an AI language model enthusiast, I often find myself alarmed by the way sensitive data is carelessly handled in various applications. While the excitement around GPT is understandable, the improper handling of sensitive information poses significant challenges for administrators and security professionals managing servers rented by clients. This document aims to provide best practices for securely implementing GPT in web applications to prevent security vulnerabilities and protect sensitive data.
+[![PHP](https://img.shields.io/badge/PHP-8.x-777BB4?logo=php)](https://php.net)
+[![Python](https://img.shields.io/badge/Python-3.x-3776AB?logo=python)](https://python.org)
+[![Node.js](https://img.shields.io/badge/Node.js-18.x-339933?logo=node.js)](https://nodejs.org)
+[![Security](https://img.shields.io/badge/Security-Critical-red)]()
 
-## Table of Contents
-- [Introduction](#Introduction)
-- [Security Risks and Vulnerabilities](#Security-Risks-and-Vulnerabilities)
-- [Using Environment Variables in PHP](#Using-Environment-Variables-in-PHP)
-- [Best Practices for Implementing GPT](#Best-Practices-for-Implementing-GPT)
-- [Choosing the Appropriate API Endpoint](#Choosing-the-Appropriate-API-Endpoint)
-- [Code Example](#Code-Example)
-- [Credits](#Credits)
+> **2025 Update**: Erweitert für alle großen AI-Provider mit Fokus auf WordPress & TYPO3 Integrationen
 
+## 📋 Inhaltsverzeichnis
 
-## Introduction
-The purpose of this document is to outline the security risks and vulnerabilities that may arise when implementing GPT in web applications and to provide best practices for mitigating these risks.
-
-## Security Risks and Vulnerabilities
-- Storing sensitive data in JavaScript
-- Exposing API keys and request URLs in the browser console
-
-1. Use server-side languages like PHP for handling sensitive data and functions
-Instead of using JavaScript to handle sensitive data, use server-side languages like PHP. This will keep the data secure and away from the client-side, where it could be accessed through the browser console.
-
-```php
-<?php
-$api_key = "your_api_key_here";
-$request_url = "https://api.openai.com/v1/engines/davinci-codex/completions";
-```
-
-2. Use AJAX for communication between the front-end and back-end
-With AJAX, you can asynchronously send data to and retrieve data from the server without exposing sensitive information in the browser console.
-
-Front-end (JavaScript with jQuery)
-```javascript
-function sendRequest(inputText) {
-  $.ajax({
-    url: 'backend.php',
-    type: 'POST',
-    data: { input: inputText },
-    success: function(response) {
-      // Process and display the response from GPT
-    },
-    error: function() {
-      // Handle error cases
-    }
-  });
-}
-```
-
-Back-end (PHP)
-```php
-<?php
-$api_key = "your_api_key_here";
-$request_url = "https://api.openai.com/v1/engines/davinci-codex/completions";
-
-$inputText = $_POST['input'];
-
-// Process the input and send a request to GPT
-
-// Return the response to the front-end
-```
-
-3. Secure your API key
-Store your API key in a secure location, such as an environment variable, and not in the source code. This will prevent accidental exposure of the key in public repositories.
-
-## Using Environment Variables in PHP
-You can store your API key as an environment variable by adding it to your server's environment configuration or by using a .env file (with the help of a library like PHP dotenv).
-
-Create a .env file in your project's root directory:
-
-```
-GPT_API_KEY=your_api_key_here
-```
-
-Install the vlucas/phpdotenv package using Composer:
-
-```
-composer require vlucas/phpdotenv
-```
-
-Load the environment variables from the .env file in your PHP script:
-
-```php
-<?php
-require_once 'vendor/autoload.php';
-
-use Dotenv\Dotenv;
-
-$dotenv = Dotenv::createImmutable(__DIR__);
-$dotenv->load();
-```
-
-Access the API key from the environment variables:
-
-```php
-<?php
-$api_key = getenv('GPT_API_KEY');
-$request_url = "https://api.openai.com/v1/engines/davinci-codex/completions";
-```
-
-By using environment variables, your API key will be kept secure and separated from your source code. Remember to add the .env file to your .gitignore file to prevent it from being accidentally committed to your public repository.
-
-## Best Practices for Implementing GPT
-4. Validate and sanitize user inputs
-Ensure that user inputs are validated and sanitized before processing them. This will prevent potential security vulnerabilities, such as XSS attacks.
-
-Back-end (PHP)
-```php
-<?php
-// Sanitize user input before processing
-$inputText = filter_input(INPUT_POST, 'input', FILTER_SANITIZE_STRING);
-```
-
-5. Use HTTPS for secure communication
-When deploying your web application, ensure that you use HTTPS to encrypt the communication between the client and the server, preventing man-in-the-middle attacks.
-
-6. Limit API request rate
-To prevent abuse of your GPT API key and control costs, implement rate-limiting on your server-side code. This will limit the number of requests made to the GPT API within a specified time frame.
-
-Back-end (PHP)
-```php
-<?php
-// Implement rate-limiting logic here
-// ...
-
-// Only proceed with the request if the rate limit is not exceeded
-if ($is_rate_limit_ok) {
-  // Send a request to GPT API
-}
-```
-
-7. Use Content Security Policy (CSP)
-Implement CSP headers to prevent XSS attacks and other vulnerabilities by controlling the resources the user agent is allowed to load for a given page.
-
-8. Use Security Headers
-Implement security headers such as X-Frame-Options, X-Content-Type-Options, and others to protect your application from common security vulnerabilities.
-
-## Choosing the Appropriate API Endpoint
-When implementing GPT, it's crucial to select the appropriate API endpoint based on your specific use case. OpenAI provides various endpoints for different purposes. Here are the current OpenAI endpoints:
-
-ENDPOINT | MODEL NAME
--- | --
-/v1/chat/completions | gpt-3.5-turbo, gpt-3.5-turbo-0301, gpt-3.5-turbo-0613, gpt-3.5-turbo-16k, gpt-3.5-turbo-16k-0613, gpt-4, gpt-4-0314, gpt-4-0613, gpt-4-32k, gpt-4-32k-0314, gpt-4o (variants: gpt-4o-2024-05-13, gpt-4o-2024-08-06, gpt-4o-2024-11-20), gpt-4o-audio-preview (e.g. gpt-4o-audio-preview-2024-10-01, gpt-4o-audio-preview-2024-12-17), gpt-4o-realtime-preview (e.g. gpt-4o-realtime-preview-2024-10-01, gpt-4o-realtime-preview-2024-12-17), gpt-4o-mini (gpt-4o-mini-2024-07-18), gpt-4o-mini-audio-preview (gpt-4o-mini-audio-preview-2024-12-17), gpt-4o-mini-realtime-preview (gpt-4o-mini-realtime-preview-2024-12-17), o1 (o1-2024-12-17), o1-mini (o1-mini-2024-09-12), o1-preview (o1-preview-2024-09-12), o3-mini (o3-mini-2025-01-31)
-/v1/completions | ada, ada-code-search-code, ada-code-search-text, ada-search-document, ada-search-query, ada-similarity, babbage, babbage-code-search-code, babbage-code-search-text, babbage-search-document, babbage-search-query, babbage-similarity, code-davinci-edit-001, code-search-ada-code-001, code-search-ada-text-001, code-search-babbage-code-001, code-search-babbage-text-001, curie, curie-instruct-beta, curie-search-document, curie-search-query, curie-similarity, davinci, davinci-instruct-beta, davinci-search-document, davinci-search-query, davinci-similarity, text-ada-001, text-babbage-001, text-curie-001, text-davinci-001, text-davinci-002, text-davinci-003, text-davinci-edit-001, text-embedding-ada-002, text-search-ada-doc-001, text-search-ada-query-001, text-search-babbage-doc-001, text-search-babbage-query-001, text-search-curie-doc-001, text-search-curie-query-001, text-search-davinci-doc-001, text-search-davinci-query-001, text-similarity-ada-001, text-similarity-babbage-001, text-similarity-curie-001, text-similarity-davinci-001
-/v1/edits | text-davinci-edit-001, code-davinci-edit-001
-/v1/audio/transcriptions | whisper-1
-/v1/audio/translations | whisper-1
-/v1/fine-tunes | davinci, curie, babbage, ada
-/v1/embeddings | text-embedding-ada-002, text-search-ada-doc-001, text-search-ada-query-001, text-search-babbage-doc-001, text-search-babbage-query-001, text-search-curie-doc-001, text-search-curie-query-001, text-search-davinci-doc-001, text-search-davinci-query-001
-/v1/moderations | text-moderation-latest, text-moderation-stable
-
-### Cost
-Different endpoints have varying costs per token or per request. Choose an endpoint that fits within your budget.
-
-### Performance
-Some endpoints offer faster response times, while others are more suited for heavy-duty tasks. Consider the performance needs of your application when selecting an endpoint.
-
-### Specific Use Case
-Each endpoint has its own strengths and weaknesses. Evaluate the unique requirements of your application and choose the endpoint that best meets those needs.
-
-## Code Example
-An example of how to use the /v1/chat/completions endpoint with the gpt-3.5-turbo model in a web application.
-
-Update the $request_url in your back-end PHP script:
-
-```php
-<?php
-$api_key = getenv('GPT_API_KEY');
-$request_url = "https://api.openai.com/v1/chat/completions";
-```
-
-Create a function to send a request to the GPT API:
-
-```php
-<?php
-function send_chat_completion_request($api_key, $request_url, $messages) {
-  $ch = curl_init();
-
-  $data = array(
-    'model' => 'gpt-3.5-turbo',
-    'messages' => $messages
-  );
-
-  curl_setopt($ch, CURLOPT_URL, $request_url);
-  curl_setopt($ch, CURLOPT_POST, 1);
-  curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
-  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-  curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-    "Content-Type: application/json",
-    "Authorization: Bearer $api_key"
-  ));
-
-  $response = curl_exec($ch);
-  $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-  curl_close($ch);
-
-  return array('response' => $response, 'httpcode' => $httpcode);
-}
-```
-
-Call the send_chat_completion_request() function and process the GPT API response:
-
-```php
-<?php
-$inputText = filter_input(INPUT_POST, 'input', FILTER_SANITIZE_STRING);
-$messages = array(
-  array('role' => 'system', 'content' => 'You are talking to a helpful assistant.'),
-  array('role' => 'user', 'content' => $inputText)
-);
-
-$result = send_chat_completion_request($api_key, $request_url, $messages);
-
-if ($result['httpcode'] == 200) {
-  $json_response = json_decode($result['response'], true);
-  $assistant_reply = $json_response['choices'][0]['message']['content'];
-
-  // Return the response to the front-end
-  echo $assistant_reply;
-} else {
-  // Handle error cases
-  echo "Error: " . $result['response'];
-}
-```
-
-This example shows how to use the /v1/chat/completions endpoint with the gpt-3.5-turbo model. The send_chat_completion_request() function sends a request to the API with the input text and receives the generated response. The assistant's reply is then returned to the front-end.
-
-## Other Note
-Additional resources and notes that might be helpful for understanding and implementing the best practices mentioned in this document.
-
-- [Secure Implementation of Artificial Intelligence (AI)](https://github.com/VolkanSah/Implementing-AI-Systems-Whitepaper/tree/main)
-
-### Credits
-S. Volkan Kücükbudak
-
-
-## Support
-
-Found this useful?
-
-- ⭐ Star this repository
-- 🐛 Report issues
-- 💡 Suggest improvements
-- 💖 [Sponsor development](https://github.com/sponsors/volkansah)
+- [Einführung](#einführung)
+- [Kritische Sicherheitsrisiken](#kritische-sicherheitsrisiken)
+- [API-Key Management](#api-key-management)
+- [OWASP Top 10 für LLMs](#owasp-top-10-für-llms)
+- [Best Practices nach Provider](#best-practices-nach-provider)
+- [Framework-spezifische Guides](#framework-spezifische-guides)
+- [Code-Beispiele](#code-beispiele)
+- [Weitere Ressourcen](#weitere-ressourcen)
 
 ---
 
-**Stay secure. Stay paranoid. 🔒**
+## 🚨 Einführung
 
+Während der AI-Hype weitergeht, sehen wir katastrophale Security-Fails bei der Integration von LLM-APIs. Diese Best Practices decken **alle großen Provider** ab und sind speziell für Production-Umgebungen optimiert.
 
-### Other Stuff
-##### Security Guides:
+### Unterstützte Providers
 
-- [Security Headers — Complete Implementation Guide](https://github.com/VolkanSah/Security-Headers)
-- [Securing FastAPI Applications](https://github.com/VolkanSah/Securing-FastAPI-Applications)
-- [ModSecurity Webserver Protection Guide](https://github.com/VolkanSah/ModSecurity-Webserver-Protection-Guide)
-- [GPT Security Best Practices](https://github.com/VolkanSah/GPT-Security-Best-Practices)
-- [WPScan – WordPress Security Scanner Guide](https://github.com/VolkanSah/WordPress-Security-Scanner-advanced-use)
+- **OpenAI** (GPT-4o, o1, o3)
+- **Anthropic** (Claude Sonnet 4.5, Opus 4.1)
+- **Google** (Gemini 2.0 Flash, Pro)
+- **Meta** (Llama 3.x via API)
+- **Mistral AI**
+- **Andere OpenAI-kompatible APIs**
 
+---
 
+## 🔥 Kritische Sicherheitsrisiken
 
+### Die häufigsten Fuck-Ups
 
+1. **API-Keys im Client-Side Code** 
+   - ❌ Keys in JavaScript/HTML
+   - ❌ Keys in Git-Repos
+   - ❌ Keys in Browser Console sichtbar
 
+2. **Fehlende Input-Validierung**
+   - ❌ Direktes Durchreichen von User-Input
+   - ❌ Keine Sanitization
+   - ❌ Keine Rate-Limiting
 
+3. **Unsichere Output-Verarbeitung**
+   - ❌ LLM-Output direkt in DB/Code
+   - ❌ Keine XSS-Protection
+   - ❌ Keine SQL-Injection-Prevention
 
+### OWASP Top 10 für LLMs (2025)
 
+| Rang | Risiko | Beschreibung |
+|------|--------|--------------|
+| LLM01 | **Prompt Injection** | Manipulation des LLM durch crafted Inputs |
+| LLM02 | **Improper Output Handling** | Ungefilterte LLM-Outputs führen zu XSS/RCE |
+| LLM03 | **Data & Model Poisoning** | Manipulation von Training-Data |
+| LLM04 | **Unbounded Consumption** | DoS durch Resource-Exhaustion |
+| LLM05 | **Supply Chain Vulnerabilities** | Kompromittierte Dependencies |
+| LLM06 | **Sensitive Information Disclosure** | Datenlecks durch LLM-Outputs |
+| LLM07 | **System Prompt Leakage** | Offenlegung von System-Prompts & Secrets |
+| LLM08 | **Vector & Embedding Weaknesses** | RAG/Embedding Security-Issues |
+| LLM09 | **Misinformation** | Übermäßiges Vertrauen in LLM-Outputs |
+| LLM10 | **Excessive Agency** | Unkontrollierte LLM-Autonomie |
 
+---
 
+## 🔐 API-Key Management
 
+### ⚠️ NIEMALS
 
+```php
+// ❌ NIEMALS SO!
+$api_key = "sk-proj-abc123...";
 
+// ❌ NIEMALS SO!
+const API_KEY = "sk-proj-abc123...";
 
+// ❌ NIEMALS SO!
+api_key = "sk-proj-abc123..."
+```
 
+### ✅ RICHTIG: Environment Variables
 
+#### PHP mit `vlucas/phpdotenv`
 
+```bash
+composer require vlucas/phpdotenv
+```
 
+```php
+<?php
+// .env (NICHT IN GIT!)
+OPENAI_API_KEY=sk-proj-xxx
+ANTHROPIC_API_KEY=sk-ant-xxx
+GOOGLE_API_KEY=AIzaSyxxx
 
+// config.php
+require_once 'vendor/autoload.php';
+use Dotenv\Dotenv;
 
+$dotenv = Dotenv::createImmutable(__DIR__);
+$dotenv->safeLoad();
 
+$openai_key = $_ENV['OPENAI_API_KEY'];
+$claude_key = $_ENV['ANTHROPIC_API_KEY'];
+$gemini_key = $_ENV['GOOGLE_API_KEY'];
+```
 
+#### Python mit `python-dotenv`
 
+```bash
+pip install python-dotenv
+```
+
+```python
+# .env (NICHT IN GIT!)
+OPENAI_API_KEY=sk-proj-xxx
+ANTHROPIC_API_KEY=sk-ant-xxx
+
+# app.py
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+openai_key = os.getenv('OPENAI_API_KEY')
+claude_key = os.getenv('ANTHROPIC_API_KEY')
+```
+
+#### Node.js mit `dotenv`
+
+```bash
+npm install dotenv
+```
+
+```javascript
+// .env (NICHT IN GIT!)
+OPENAI_API_KEY=sk-proj-xxx
+ANTHROPIC_API_KEY=sk-ant-xxx
+
+// app.js
+require('dotenv').config();
+
+const openaiKey = process.env.OPENAI_API_KEY;
+const claudeKey = process.env.ANTHROPIC_API_KEY;
+```
+
+### 🔒 Zusätzliche Key-Security
+
+```gitignore
+# .gitignore
+.env
+.env.*
+!.env.example
+*.key
+secrets/
+credentials/
+```
+
+---
+
+## 🏗️ Framework-spezifische Guides
+
+### WordPress Integration
+
+```php
+<?php
+/**
+ * Plugin Name: Secure AI Integration
+ * Description: Sichere AI-API Integration für WordPress
+ * Version: 1.0.0
+ */
+
+// Secrets in wp-config.php
+define('OPENAI_API_KEY', getenv('OPENAI_API_KEY'));
+
+// API-Call Wrapper mit Nonce-Verification
+add_action('wp_ajax_ai_request', function() {
+    check_ajax_referer('ai_nonce', 'nonce');
+    
+    // Input Sanitization
+    $user_input = sanitize_textarea_field($_POST['prompt']);
+    
+    // Rate Limiting via Transients
+    $user_id = get_current_user_id();
+    $rate_key = "ai_rate_$user_id";
+    
+    if (get_transient($rate_key)) {
+        wp_send_json_error(['message' => 'Rate limit exceeded']);
+        return;
+    }
+    
+    set_transient($rate_key, true, 60); // 1 req/min
+    
+    // API Call
+    $response = wp_remote_post('https://api.openai.com/v1/chat/completions', [
+        'headers' => [
+            'Authorization' => 'Bearer ' . OPENAI_API_KEY,
+            'Content-Type' => 'application/json'
+        ],
+        'body' => json_encode([
+            'model' => 'gpt-4o',
+            'messages' => [
+                ['role' => 'system', 'content' => 'You are a helpful assistant.'],
+                ['role' => 'user', 'content' => $user_input]
+            ]
+        ])
+    ]);
+    
+    if (is_wp_error($response)) {
+        wp_send_json_error(['message' => 'API request failed']);
+        return;
+    }
+    
+    $data = json_decode(wp_remote_retrieve_body($response), true);
+    
+    // Output Sanitization
+    $ai_response = wp_kses_post($data['choices'][0]['message']['content']);
+    
+    wp_send_json_success(['response' => $ai_response]);
+});
+
+// Frontend JS mit Nonce
+add_action('wp_enqueue_scripts', function() {
+    wp_localize_script('main-js', 'aiConfig', [
+        'ajaxUrl' => admin_url('admin-ajax.php'),
+        'nonce' => wp_create_nonce('ai_nonce')
+    ]);
+});
+```
+
+### TYPO3 Extension
+
+```php
+<?php
+// Configuration/TCA/Overrides/tt_content.php
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPlugin(
+    [
+        'AI Content Generator',
+        'ai_generator',
+        'EXT:your_extension/Resources/Public/Icons/ai.svg'
+    ],
+    'CType',
+    'your_extension'
+);
+
+// Classes/Service/AIService.php
+namespace Vendor\Extension\Service;
+
+use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Cache\CacheManager;
+use GuzzleHttp\Client;
+
+class AIService
+{
+    private string $apiKey;
+    private Client $client;
+    
+    public function __construct(ExtensionConfiguration $extConfig)
+    {
+        // Assuming configuration is loaded from settings
+        $this->apiKey = $extConfig->get('your_extension', 'openaiApiKey');
+        $this->client = new Client();
+    }
+    
+    public function generateContent(string $prompt): string
+    {
+        // Input Validation
+        if (strlen($prompt) > 4000) {
+            throw new \InvalidArgumentException('Prompt too long');
+        }
+        
+        // Rate Limiting via Cache
+        $cacheKey = 'ai_rate_' . $GLOBALS['BE_USER']->user['uid'];
+        $cache = GeneralUtility::makeInstance(CacheManager::class)->getCache('runtime');
+        
+        if ($cache->has($cacheKey)) {
+            throw new \RuntimeException('Rate limit exceeded');
+        }
+        
+        $cache->set($cacheKey, true, [], 60);
+        
+        // API Call
+        $response = $this->client->post('https://api.openai.com/v1/chat/completions', [
+            'headers' => [
+                'Authorization' => 'Bearer ' . $this->apiKey,
+                'Content-Type' => 'application/json'
+            ],
+            'json' => [
+                'model' => 'gpt-4o',
+                'messages' => [
+                    ['role' => 'system', 'content' => 'Generate SEO-optimized content.'],
+                    ['role' => 'user', 'content' => $prompt]
+                ]
+            ]
+        ]);
+        
+        $data = json_decode($response->getBody(), true);
+        
+        // Output Sanitization
+        return htmlspecialchars($data['choices'][0]['message']['content']);
+    }
+}
+```
+
+---
+
+## 💻 Code-Beispiele: Multi-Provider Support
+
+### Universal PHP API Client
+
+```php
+<?php
+class UniversalAIClient
+{
+    private array $config;
+    
+    public function __construct(array $config)
+    {
+        $this->config = $config;
+    }
+    
+    public function chat(string $provider, string $prompt): string
+    {
+        $handlers = [
+            'openai' => fn() => $this->callOpenAI($prompt),
+            'claude' => fn() => $this->callClaude($prompt),
+            'gemini' => fn() => $this->callGemini($prompt),
+        ];
+        
+        if (!isset($handlers[$provider])) {
+            throw new \InvalidArgumentException("Unknown provider: $provider");
+        }
+        
+        return $handlers[$provider]();
+    }
+    
+    private function callOpenAI(string $prompt): string
+    {
+        $ch = curl_init('https://api.openai.com/v1/chat/completions');
+        curl_setopt_array($ch, [
+            CURLOPT_POST => true,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_HTTPHEADER => [
+                'Authorization: Bearer ' . $this->config['openai_key'],
+                'Content-Type: application/json'
+            ],
+            CURLOPT_POSTFIELDS => json_encode([
+                'model' => 'gpt-4o',
+                'messages' => [
+                    ['role' => 'user', 'content' => $prompt]
+                ]
+            ])
+        ]);
+        
+        $response = curl_exec($ch);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+        
+        if ($httpCode !== 200) {
+            throw new \RuntimeException("OpenAI API error: $httpCode");
+        }
+        
+        $data = json_decode($response, true);
+        return $data['choices'][0]['message']['content'];
+    }
+    
+    private function callClaude(string $prompt): string
+    {
+        $ch = curl_init('https://api.anthropic.com/v1/messages');
+        curl_setopt_array($ch, [
+            CURLOPT_POST => true,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_HTTPHEADER => [
+                'x-api-key: ' . $this->config['claude_key'],
+                'anthropic-version: 2023-06-01',
+                'Content-Type: application/json'
+            ],
+            CURLOPT_POSTFIELDS => json_encode([
+                'model' => 'claude-sonnet-4-20250514', // Hypothetical 2025 model
+                'max_tokens' => 1024,
+                'messages' => [
+                    ['role' => 'user', 'content' => $prompt]
+                ]
+            ])
+        ]);
+        
+        $response = curl_exec($ch);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+        
+        if ($httpCode !== 200) {
+            throw new \RuntimeException("Claude API error: $httpCode");
+        }
+        
+        $data = json_decode($response, true);
+        return $data['content'][0]['text'];
+    }
+    
+    private function callGemini(string $prompt): string
+    {
+        // Hypothetical 2.0 endpoint
+        $ch = curl_init('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=' . $this->config['gemini_key']);
+        curl_setopt_array($ch, [
+            CURLOPT_POST => true,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_HTTPHEADER => ['Content-Type: application/json'],
+            CURLOPT_POSTFIELDS => json_encode([
+                'contents' => [
+                    ['parts' => [['text' => $prompt]]]
+                ]
+            ])
+        ]);
+        
+        $response = curl_exec($ch);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+        
+        if ($httpCode !== 200) {
+            throw new \RuntimeException("Gemini API error: $httpCode");
+        }
+        
+        $data = json_decode($response, true);
+        return $data['candidates'][0]['content']['parts'][0]['text'];
+    }
+}
+
+// Verwendung
+$client = new UniversalAIClient([
+    'openai_key' => getenv('OPENAI_API_KEY'),
+    'claude_key' => getenv('ANTHROPIC_API_KEY'),
+    'gemini_key' => getenv('GOOGLE_API_KEY')
+]);
+
+$response = $client->chat('openai', 'Explain quantum computing');
+```
+
+### Python Async Implementation
+
+```python
+import asyncio
+import aiohttp
+import os
+from typing import Dict, Any
+
+class UniversalAIClient:
+    def __init__(self):
+        self.config = {
+            'openai': {
+                'url': 'https://api.openai.com/v1/chat/completions',
+                'key': os.getenv('OPENAI_API_KEY'),
+                'header': 'Authorization',
+                'prefix': 'Bearer '
+            },
+            'claude': {
+                'url': 'https://api.anthropic.com/v1/messages',
+                'key': os.getenv('ANTHROPIC_API_KEY'),
+                'header': 'x-api-key',
+                'prefix': ''
+            }
+        }
+    
+    async def chat(self, provider: str, prompt: str) -> str:
+        if provider not in self.config:
+            raise ValueError(f"Unknown provider: {provider}")
+        
+        cfg = self.config[provider]
+        
+        async with aiohttp.ClientSession() as session:
+            headers = {
+                cfg['header']: f"{cfg['prefix']}{cfg['key']}",
+                'Content-Type': 'application/json'
+            }
+            
+            if provider == 'claude':
+                headers['anthropic-version'] = '2023-06-01'
+            
+            payload = self._build_payload(provider, prompt)
+            
+            async with session.post(cfg['url'], headers=headers, json=payload) as resp:
+                if resp.status != 200:
+                    raise RuntimeError(f"{provider} API error: {resp.status}")
+                
+                data = await resp.json()
+                return self._extract_response(provider, data)
+    
+    def _build_payload(self, provider: str, prompt: str) -> Dict[str, Any]:
+        if provider == 'openai':
+            return {
+                'model': 'gpt-4o',
+                'messages': [{'role': 'user', 'content': prompt}]
+            }
+        elif provider == 'claude':
+            return {
+                'model': 'claude-sonnet-4-20250514', # Hypothetical model
+                'max_tokens': 1024,
+                'messages': [{'role': 'user', 'content': prompt}]
+            }
+    
+    def _extract_response(self, provider: str, data: Dict[str, Any]) -> str:
+        if provider == 'openai':
+            return data['choices'][0]['message']['content']
+        elif provider == 'claude':
+            return data['content'][0]['text']
+
+# Verwendung
+async def main():
+    client = UniversalAIClient()
+    response = await client.chat('openai', 'Explain AI security')
+    print(response)
+
+asyncio.run(main())
+```
+
+---
+
+## 🛡️ Security Checklist
+
+### Backend
+
+- [ ] API-Keys in Environment Variables
+- [ ] Input-Validierung & Sanitization
+- [ ] Output-Escaping (XSS-Prevention)
+- [ ] Rate-Limiting implementiert
+- [ ] HTTPS-only Communication
+- [ ] Error-Handling ohne Info-Leaks
+- [ ] Logging ohne Secrets
+- [ ] CORS richtig konfiguriert
+
+### Frontend
+
+- [ ] Keine API-Keys im Client
+- [ ] CSRF-Protection (Nonces/Tokens)
+- [ ] Content-Security-Policy Headers
+- [ ] XSS-Protection aktiv
+- [ ] Sub-Resource Integrity (SRI)
+
+### Production
+
+- [ ] Secrets Management (Vault/AWS Secrets Manager)
+- [ ] API-Key Rotation
+- [ ] Monitoring & Alerting
+- [ ] Budget-Limits bei Providern
+- [ ] Audit-Logs aktiviert
+
+---
+
+## 📚 Provider-spezifische Docs
+
+### OpenAI
+- [Production Best Practices](https://platform.openai.com/docs/guides/production-best-practices)
+- [Safety Best Practices](https://platform.openai.com/docs/guides/safety-best-practices)
+- [Rate Limits](https://platform.openai.com/docs/guides/rate-limits)
+
+### Anthropic Claude
+- [API Key Best Practices](https://support.claude.com/en/articles/9767949-api-key-best-practices)
+- [Safety Guidelines](https://docs.anthropic.com/en/docs/about-claude/use-case-guidelines)
+
+### Google Gemini
+- [Security & Compliance](https://cloud.google.com/gemini/docs/codeassist/security-privacy-compliance)
+- [Safety Settings](https://ai.google.dev/gemini-api/docs/safety-settings)
+
+---
+
+### 🔗 Additional Security Guides
+
+- [OWASP Top 10 for LLMs](https://owasp.org/www-project-top-10-for-large-language-model-applications/)
+- [AI Security Best Practices (NIST)](https://www.nist.gov/itl/ai-risk-management-framework)
+
+---
+
+### 💖 Support & Contributions
+
+Found this useful?
+
+- ⭐ Star this repo
+- 🐛 Report Issues
+- 💡 Suggest Improvements
+- 🔀 Pull Requests welcome
+
+---
+
+## 📝 License
+
+MIT License - see [LICENSE](LICENSE)
+
+---
+
+## ⚠️ Disclaimer
+
+These best practices are recommendations. **You** are responsible for the security of your implementation. No guarantee of completeness. Security is a moving target.
+
+**Stay paranoid. Stay secure. 🔒**
+
+---
+
+<p align="center">
+  <sub>Made with 💀 for the WordPress & TYPO3 Community</sub><br>
+  <sub>Gewartet von <a href="https://github.com/volkansah">Volkan Kücükbudak</a></sub>
+</p>
