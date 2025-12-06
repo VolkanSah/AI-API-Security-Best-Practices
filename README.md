@@ -28,7 +28,7 @@
   - [Universal PHP API Client](#universal-php-api-client)
   - [Python Async Implementation](#python-async-implementation)
 - [Security Checklist](#️-security-checklist)
-- [Provider-Specific Documentation](#-provider-specific-documentation)
+- [Provider-Specific Documentation](#provider-specific-documentation)
 - [Additional Security Resources](#-additional-security-resources)
 - [Support & Contributions](#-support--contributions)
 - [License](#-license)
