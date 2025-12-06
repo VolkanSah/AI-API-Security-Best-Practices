@@ -42,10 +42,10 @@ While the AI hype continues, we are witnessing catastrophic security failures in
 
 ### Supported Providers
 
-- **OpenAI** (GPT-4o, o1, o3-mini)
-- **Anthropic** (Claude Sonnet 4.5, Opus 4.1)
-- **Google** (Gemini 2.0 Flash, Pro)
-- **Meta** (Llama 3.x via API)
+- **OpenAI** 
+- **Anthropic** 
+- **Google**
+- **Meta**
 - **Mistral AI**
 - **Other OpenAI-compatible APIs**
 
