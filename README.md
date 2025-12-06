@@ -1,4 +1,4 @@
-# 🛡️ AI API Security Best Practices
+# 🛡️ AI API Security (Best Practices)
 
 **Universal Security Guide for OpenAI, Anthropic Claude, Google Gemini & Other LLM APIs**
 
