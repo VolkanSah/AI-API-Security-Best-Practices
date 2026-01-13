@@ -138,6 +138,9 @@ $claude_key = $_ENV['ANTHROPIC_API_KEY'];
 $gemini_key = $_ENV['GOOGLE_API_KEY'];
 ```
 
+
+---
+
 #### Python with `python-dotenv`
 
 ```bash
@@ -160,6 +163,9 @@ load_dotenv()
 openai_key = os.getenv('OPENAI_API_KEY')
 claude_key = os.getenv('ANTHROPIC_API_KEY')
 ```
+
+
+---
 
 #### Node.js with `dotenv`
 
@@ -353,6 +359,9 @@ jQuery(document).ready(function($) {
     });
 });
 ```
+
+
+---
 
 #### TYPO3 Extension
 
@@ -760,6 +769,8 @@ try {
 }
 ```
 
+---
+
 ### Python Async Implementation
 
 ```python
@@ -966,6 +977,9 @@ if __name__ == '__main__':
     asyncio.run(main())
 ```
 
+---
+
+
 ### Node.js Implementation
 
 ```javascript
@@ -1161,24 +1175,30 @@ module.exports = UniversalAIClient;
 
 ---
 
-### Provider-Specific Documentation
+## Provider-Specific Documentation
 
 ### OpenAI
-- [Production Best Practices](https://platform.openai.com/docs/guides/production-best-practices)
-- [Safety Best Practices](https://platform.openai.com/docs/guides/safety-best-practices)
-- [Rate Limits](https://platform.openai.com/docs/guides/rate-limits)
+
+* [Production Best Practices](https://platform.openai.com/docs/guides/production-best-practices)
+* [Safety Best Practices](https://platform.openai.com/docs/guides/safety-best-practices)
+* [Rate Limits](https://platform.openai.com/docs/guides/rate-limits)
 
 ### Anthropic Claude
-- [API Key Best Practices](https://docs.anthropic.com/claude/docs/api-key-management)
-- [Safety Guidelines](https://docs.anthropic.com/claude/docs/safety)
-- [Rate Limits](https://docs.anthropic.com/claude/reference/rate-limits)
+
+* [API Key Best Practices](https://docs.anthropic.com/claude/docs/api-key-management)
+* [Safety Guidelines](https://docs.anthropic.com/claude/docs/safety)
+* [Rate Limits](https://docs.anthropic.com/claude/reference/rate-limits)
 
 ### Google Gemini
-- [Security & Compliance](https://ai.google.dev/gemini-api/docs/security)
-- [Safety Settings](https://ai.google.dev/gemini-api/docs/safety-settings)
-- [API Quotas](https://ai.google.dev/gemini-api/docs/quota)
+
+* [Security & Privacy](https://ai.google.dev/gemini-api/docs/security-privacy)
+* [Safety Guidance](https://ai.google.dev/gemini-api/docs/safety-guidance)
+* [Quotas & Pricing](https://ai.google.dev/gemini-api/docs/quota)
 
 ---
+
+
+
 
 ## 🔗 Additional Security Resources
 
@@ -1264,5 +1284,5 @@ These best practices are **recommendations based on current industry standards**
 <p align="center">
   <sub>Made with 💀 for the WordPress & TYPO3 Community</sub><br>
   <sub>Maintained by <a href="https://github.com/volkansah">Volkan Kücükbudak</a></sub><br>
-  <sub>Last Updated: December 2025</sub>
+  <sub>Last Updated: Jan 2026</sub>
 </p>
