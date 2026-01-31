@@ -7,6 +7,22 @@
 [![Node.js](https://img.shields.io/badge/Node.js-18.x-339933?logo=node.js)](https://nodejs.org)
 [![Security](https://img.shields.io/badge/Security-Critical-red)]()
 
+
+New: Dev2
+```
+README.md (Überblick + Konzepte)
+├── /examples
+│   ├── php-universal-client.php
+│   ├── python-async-client.py
+│   ├── nodejs-client.js
+│   ├── wordpress-plugin.php
+│   └── typo3-extension.php
+├── /security
+│   ├── mcp-security.md
+│   ├── multimodal-attacks.md
+│   └── agentic-ai.md
+└── .env.example
+```
 > **2025/26 Update**: Expanded for all major AI providers with a focus on WordPress & TYPO3 integrations
 
 ---
