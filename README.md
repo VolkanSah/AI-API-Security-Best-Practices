@@ -15,8 +15,8 @@ README.md (Überblick + Konzepte)
 │   ├── php-universal-client.php
 │   ├── python-async-client.py
 │   ├── nodejs-client.js
-│   ├── wordpress-plugin.php
-│   └── typo3-extension.php
+│   ├── wordpress/
+│   └── typo3/
 ├── /security
 │   ├── mcp-security.md
 │   ├── multimodal-attacks.md
