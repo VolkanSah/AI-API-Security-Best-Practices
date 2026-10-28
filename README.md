@@ -1,7 +1,7 @@
 # 🛡️ AI API Security (Best Practices)
 
 > [!WARNING]
-> Its hard to update all stuff, this was 9 Month without update... next brance i will craft with AI like claude or GLM for faster updates ( no autoamations! Human review!)
+> Its hard to update all stuff, this was 9 Month without update... next brance i will craft with AI like claude or GLM for faster updates ( no autoamations! Human review!).. soon new update...
 
 [![PHP](https://img.shields.io/badge/PHP-8.x-777BB4?logo=php)](https://php.net)
 [![Python](https://img.shields.io/badge/Python-3.x-3776AB?logo=python)](https://python.org)
