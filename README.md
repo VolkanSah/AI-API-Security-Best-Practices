@@ -294,6 +294,7 @@ location ~ /\.(?!well-known) {
 Both examples call OpenAI's Responses API. For other providers, swap the request/response handling with the clients from [Code Examples](#code-examples-multi-provider-support). The security pattern stays the same: **authorize → validate → rate-limit → call the API server-side → escape the output.**
 
 ### WordPress Integration
+> not tested, soon sorry! AI crafted from my old source
 
 ```php
 <?php
@@ -487,6 +488,8 @@ jQuery(document).ready(function ($) {
 ---
 
 ### TYPO3 Extension
+> not tested, soon sorry! AI crafted from my old source
+
 
 > Written for TYPO3 12+ (constructor injection, PSR-3 logger, Core `RequestFactory`). Replace `Vendor\Extension`, `YourExtension` and `your_extension` with your own names. The classes are autowired by the standard `Configuration/Services.yaml` of your extension. After adding the cache configuration below, run the database schema update once (Admin Tools → Maintenance → Analyze Database Structure, or `typo3 database:updateschema`) so the cache tables exist.
 
